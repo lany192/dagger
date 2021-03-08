@@ -22,8 +22,8 @@
         annotationProcessor 'com.google.dagger:dagger-compiler:+'
         annotationProcessor 'com.google.dagger:dagger-android-processor:+'
 	    //拓展库引入
-        implementation 'com.github.lany192.dagger:annotations:1.0.1'
-        annotationProcessor 'com.github.lany192.dagger:compiler:1.0.1'
+        implementation 'com.github.lany192.dagger:annotations:1.0.2'
+        annotationProcessor 'com.github.lany192.dagger:compiler:1.0.2'
 	}
 	
 	引入AndroidModule模块到AppComponent中
