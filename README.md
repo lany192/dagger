@@ -24,3 +24,7 @@
         implementation 'com.github.lany192.dagger:annotations:1.0.1'
         annotationProcessor 'com.github.lany192.dagger:compiler:1.0.1'
 	}
+	
+	引入AndroidModule模块到AppComponent中
+	
+	在需要注册的类上加入@DaggerInject
