@@ -4,7 +4,7 @@ import android.app.Application;
 
 
 import com.github.lany192.dagger.sample.MyApplication;
-import com.github.lany192.dagger.sample.di.module.ActivityModule;
+import com.github.lany192.dagger.ActivityModule;
 
 import javax.inject.Singleton;
 
