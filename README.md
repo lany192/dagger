@@ -14,6 +14,13 @@
 		}
 	}
 	
-    dependencies {
-            implementation 'com.github.lany192:dagger:Tag'
-    }
+	dependencies {
+	    //dagger库引入
+        implementation 'com.google.dagger:dagger-android:+'
+        implementation 'com.google.dagger:dagger-android-support:+'
+        annotationProcessor 'com.google.dagger:dagger-compiler:+'
+        annotationProcessor 'com.google.dagger:dagger-android-processor:+'
+	    //拓展库引入
+        implementation 'com.github.lany192.dagger:annotations:1.0.1'
+        implementation 'com.github.lany192.dagger:compiler:1.0.1'
+	}
