@@ -3,6 +3,8 @@ package com.github.lany192.dagger.compiler;
 import com.github.lany192.dagger.annotation.DaggerInject;
 import com.github.lany192.dagger.annotation.TransferBind;
 import com.google.auto.service.AutoService;
+import com.google.common.collect.Table;
+import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -30,6 +32,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+
+import dagger.Module;
 
 @AutoService(Processor.class)
 public class DaggerProcessor extends AbstractProcessor {
@@ -286,24 +290,17 @@ public class DaggerProcessor extends AbstractProcessor {
         FieldSpec exitAnim = FieldSpec.builder(TypeName.INT, "exitAnim", Modifier.PRIVATE, Modifier.STATIC)
                 .initializer("-1")
                 .build();
-        TypeSpec UIHelper = TypeSpec.classBuilder("UIHelper")
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .addField(ClassName.bestGuess("android.content.Context"), "context", Modifier.PRIVATE, Modifier.STATIC)
-                .addField(ClassName.bestGuess("android.content.Intent"), "intent", Modifier.PRIVATE, Modifier.STATIC)
-                .addField(enterAnim)
-                .addField(exitAnim)
-                .addMethod(constructor)
+
+
+
+
+        TypeSpec activityModule = TypeSpec.classBuilder("ActivityModule")
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .addAnnotation(AnnotationSpec.builder(Module.class).build())
                 .addMethod(bind)
                 .addMethod(bind2)
-                .addMethod(from)
-                .addMethod(go)
-                .addMethod(goForResult)
-                .addMethod(setTransition)
-                .addMethod(reset)
-                .addType(UIHelperToActivity)
-                .addTypes(targetActivitiesClassList)
                 .build();
-        JavaFile javaFile = JavaFile.builder(PACKAGE_NAME, UIHelper).build();
+        JavaFile javaFile = JavaFile.builder(PACKAGE_NAME, activityModule).build();
         javaFile.writeTo(filer);
     }
 
