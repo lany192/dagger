@@ -35,4 +35,13 @@ public class UIEntity {
     public void setFields(List<Field> fields) {
         this.fields = fields;
     }
+
+    @Override
+    public String toString() {
+        return "UIEntity{" +
+                "packageName='" + packageName + '\'' +
+                ", className='" + className + '\'' +
+                ", fields=" + fields +
+                '}';
+    }
 }

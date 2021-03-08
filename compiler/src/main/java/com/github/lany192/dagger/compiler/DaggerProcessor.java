@@ -1,6 +1,6 @@
 package com.github.lany192.dagger.compiler;
 
-import com.github.lany192.dagger.annotation.RequestParam;
+import com.github.lany192.dagger.annotation.DaggerInject;
 import com.github.lany192.dagger.annotation.TransferBind;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ArrayTypeName;
@@ -32,7 +32,7 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
 @AutoService(Processor.class)
-public class MyProcessor extends AbstractProcessor {
+public class DaggerProcessor extends AbstractProcessor {
     private static final String PACKAGE_NAME = "com.github.lany192.dagger";
     private Filer filer;
     private Map<String, UIEntity> map;
@@ -46,12 +46,13 @@ public class MyProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        for (Element element : roundEnvironment.getElementsAnnotatedWith(RequestParam.class)) {
+        for (Element element : roundEnvironment.getElementsAnnotatedWith(DaggerInject.class)) {
             if (!(element instanceof VariableElement)) {
                 return false;
             }
             getEachVariableElement(element);
         }
+
         try {
             createUIHelper();
             createInjectors();
@@ -67,7 +68,7 @@ public class MyProcessor extends AbstractProcessor {
         String fieldName = variableElement.getSimpleName().toString();
         String fieldType = variableElement.asType().toString();
         String className = variableElement.getEnclosingElement().getSimpleName().toString();
-        RequestParam annotation = element.getAnnotation(RequestParam.class);
+        DaggerInject annotation = element.getAnnotation(DaggerInject.class);
         String fieldValue = annotation.value().isEmpty() ? fieldName : annotation.value();
         String canonicalClassName = packageName + "." + className;
         UIEntity entity;
@@ -76,6 +77,8 @@ public class MyProcessor extends AbstractProcessor {
             entity.setPackageName(packageName);
             entity.setClassName(className);
             map.put(canonicalClassName, entity);
+
+            System.out.println("测试:" + entity);
         } else {
             entity = map.get(canonicalClassName);
         }
@@ -394,7 +397,7 @@ public class MyProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> set = new LinkedHashSet<>();
-        set.add(RequestParam.class.getCanonicalName());
+        set.add(DaggerInject.class.getCanonicalName());
         return set;
     }
 

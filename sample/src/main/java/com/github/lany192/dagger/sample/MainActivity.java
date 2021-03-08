@@ -3,8 +3,11 @@ package com.github.lany192.dagger.sample;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.github.lany192.dagger.annotation.DaggerInject;
+
 import dagger.android.support.DaggerAppCompatActivity;
 
+@DaggerInject
 public class MainActivity extends DaggerAppCompatActivity {
 
     @Override

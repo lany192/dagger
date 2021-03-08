@@ -56,4 +56,15 @@ public class Field {
     public void setParam(String param) {
         this.param = param;
     }
+
+    @Override
+    public String toString() {
+        return "Field{" +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", value='" + value + '\'' +
+                ", originalType='" + originalType + '\'' +
+                ", param='" + param + '\'' +
+                '}';
+    }
 }
