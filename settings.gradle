@@ -1,5 +1,4 @@
 include ':compiler'
 include ':annotations'
-include ':dagger'
 include ':sample'
 rootProject.name = "dagger"

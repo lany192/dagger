@@ -35,7 +35,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation project(path: ':dagger')
+    implementation project(path: ':annotations')
     annotationProcessor project(path: ':compiler')
 
     implementation 'com.google.dagger:dagger-android:2.32'
