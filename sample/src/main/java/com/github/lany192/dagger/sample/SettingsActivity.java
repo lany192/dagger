@@ -1,10 +1,10 @@
 package com.github.lany192.dagger.sample;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-public class SettingsActivity extends AppCompatActivity {
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class SettingsActivity extends DaggerAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
