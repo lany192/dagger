@@ -28,7 +28,7 @@ import javax.lang.model.element.VariableElement;
 import javax.tools.Diagnostic;
 
 @AutoService(Processor.class)
-public class ActivityModuleProcessor extends AbstractProcessor {
+public class AndroidModuleProcessor extends AbstractProcessor {
     private Filer filer;
 
     @Override
@@ -66,7 +66,7 @@ public class ActivityModuleProcessor extends AbstractProcessor {
             String className = element.getSimpleName().toString();
             messager.printMessage(Diagnostic.Kind.NOTE, " 发现目标类: " + packageElement.getQualifiedName() + "." + className);
 
-            MethodSpec methodSpec = MethodSpec.methodBuilder("_" + className)
+            MethodSpec methodSpec = MethodSpec.methodBuilder(Utils.toLowerCaseFirstOne(className))
                     .addModifiers(Modifier.ABSTRACT)
                     .addAnnotation(AnnotationSpec
                             .builder(ClassName.get("dagger.android", "ContributesAndroidInjector"))
@@ -84,7 +84,7 @@ public class ActivityModuleProcessor extends AbstractProcessor {
     }
 
     private void createActivityModule(List<MethodSpec> methods) throws Exception {
-        TypeSpec.Builder builder = TypeSpec.classBuilder("ActivityModule")
+        TypeSpec.Builder builder = TypeSpec.classBuilder("AndroidModule")
                 .addJavadoc("自动生成代码，请勿编辑")
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(AnnotationSpec
