@@ -1,6 +1,6 @@
 package com.github.lany192.dagger.compiler;
 
-import com.github.lany192.dagger.annotation.DaggerInject;
+import com.github.lany192.dagger.annotation.Dagger;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -40,7 +40,7 @@ public class AndroidModuleProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> set = new LinkedHashSet<>();
-        set.add(DaggerInject.class.getCanonicalName());
+        set.add(Dagger.class.getCanonicalName());
         return set;
     }
 
@@ -55,7 +55,7 @@ public class AndroidModuleProcessor extends AbstractProcessor {
         Messager messager = processingEnv.getMessager();
         List<MethodSpec> methods = new ArrayList<>();
         // 打印注解
-        Set<? extends Element> elements = environment.getElementsAnnotatedWith(DaggerInject.class);
+        Set<? extends Element> elements = environment.getElementsAnnotatedWith(Dagger.class);
         for (Element element : elements) {
             if (element instanceof VariableElement) {
                 messager.printMessage(Diagnostic.Kind.WARNING, "忽略注解在非class上的注解");

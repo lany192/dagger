@@ -2,11 +2,11 @@ package com.github.lany192.dagger.sample;
 
 import android.os.Bundle;
 
-import com.github.lany192.dagger.annotation.DaggerInject;
+import com.github.lany192.dagger.annotation.Dagger;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
-@DaggerInject
+@Dagger
 public class AboutActivity extends DaggerAppCompatActivity {
 
     @Override
