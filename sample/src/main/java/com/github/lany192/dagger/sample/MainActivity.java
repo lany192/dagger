@@ -19,8 +19,8 @@ public class MainActivity extends DaggerAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.button).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
-        findViewById(R.id.button2).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AboutActivity.class)));
+        findViewById(R.id.button).setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
+        findViewById(R.id.button2).setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
         ((TextView) findViewById(R.id.show)).setText(user.toString());
     }
 }
