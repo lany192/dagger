@@ -1,5 +1,6 @@
 package com.github.lany192.dagger.compiler;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.github.lany192.dagger.annotation.Dagger;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.AnnotationSpec;
@@ -9,6 +10,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,32 +57,48 @@ public class AndroidModuleProcessor extends AbstractProcessor {
         Messager messager = processingEnv.getMessager();
         List<MethodSpec> methods = new ArrayList<>();
         // 打印注解
-        Set<? extends Element> elements = environment.getElementsAnnotatedWith(Dagger.class);
-        for (Element element : elements) {
+        Set<? extends Element> daggerElements = environment.getElementsAnnotatedWith(Dagger.class);
+        Set<? extends Element> routeElements = environment.getElementsAnnotatedWith(Route.class);
+
+        for (Element element : daggerElements) {
             if (element instanceof VariableElement) {
                 messager.printMessage(Diagnostic.Kind.WARNING, "忽略注解在非class上的注解");
                 return false;
             }
-            //获取包信息
-            PackageElement packageElement = processingEnv.getElementUtils().getPackageOf(element);
-            String className = element.getSimpleName().toString();
-            messager.printMessage(Diagnostic.Kind.NOTE, " 发现目标类: " + packageElement.getQualifiedName() + "." + className);
-
-            MethodSpec methodSpec = MethodSpec.methodBuilder(Utils.toLowerCaseFirstOne(className))
-                    .addModifiers(Modifier.ABSTRACT)
-                    .addAnnotation(AnnotationSpec
-                            .builder(ClassName.get("dagger.android", "ContributesAndroidInjector"))
-                            .build())
-                    .returns(ClassName.get(packageElement.getQualifiedName().toString(), className))
-                    .build();
-            methods.add(methodSpec);
+            methods.add(getMethodSpec(messager, element));
         }
+        for (Element element : routeElements) {
+            if (element instanceof VariableElement) {
+                messager.printMessage(Diagnostic.Kind.WARNING, "忽略注解在非class上的注解");
+                return false;
+            }
+            methods.add(getMethodSpec(messager, element));
+        }
+        //去重
+        HashSet<MethodSpec> hashSet = new HashSet<>(methods);
+        methods.clear();
+        methods.addAll(hashSet);
         try {
             createActivityModule(methods);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return true;
+    }
+
+    private MethodSpec getMethodSpec(Messager messager, Element element) {
+        //获取包信息
+        PackageElement packageElement = processingEnv.getElementUtils().getPackageOf(element);
+        String className = element.getSimpleName().toString();
+        messager.printMessage(Diagnostic.Kind.NOTE, " 发现目标类: " + packageElement.getQualifiedName() + "." + className);
+
+        return MethodSpec.methodBuilder(Utils.toLowerCaseFirstOne(className))
+                .addModifiers(Modifier.ABSTRACT)
+                .addAnnotation(AnnotationSpec
+                        .builder(ClassName.get("dagger.android", "ContributesAndroidInjector"))
+                        .build())
+                .returns(ClassName.get(packageElement.getQualifiedName().toString(), className))
+                .build();
     }
 
     private void createActivityModule(List<MethodSpec> methods) throws Exception {

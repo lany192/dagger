@@ -2,11 +2,10 @@ package com.github.lany192.dagger.sample;
 
 import android.os.Bundle;
 
-import com.github.lany192.dagger.annotation.Dagger;
-
+import com.alibaba.android.arouter.facade.annotation.Route;
 import dagger.android.support.DaggerAppCompatActivity;
 
-@Dagger
+@Route(path = "/app/about")
 public class AboutActivity extends DaggerAppCompatActivity {
 
     @Override
