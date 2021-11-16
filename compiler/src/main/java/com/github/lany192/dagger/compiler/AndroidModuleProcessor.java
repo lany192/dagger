@@ -56,8 +56,9 @@ public class AndroidModuleProcessor extends AbstractProcessor {
         // 准备在gradle的控制台打印信息
         Messager messager = processingEnv.getMessager();
         List<MethodSpec> methods = new ArrayList<>();
-        // 打印注解
+        //自定义注解
         Set<? extends Element> daggerElements = environment.getElementsAnnotatedWith(Dagger.class);
+        //兼容ARouter的注解
         Set<? extends Element> routeElements = environment.getElementsAnnotatedWith(Route.class);
 
         for (Element element : daggerElements) {
