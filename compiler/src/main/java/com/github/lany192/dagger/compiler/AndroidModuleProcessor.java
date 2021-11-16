@@ -43,6 +43,7 @@ public class AndroidModuleProcessor extends AbstractProcessor {
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> set = new LinkedHashSet<>();
         set.add(Dagger.class.getCanonicalName());
+        set.add(Route.class.getCanonicalName());
         return set;
     }
 
