@@ -1,6 +1,6 @@
 [![](https://jitpack.io/v/lany192/dagger.svg)](https://jitpack.io/#lany192/dagger)
 # dagger
-
+（已废弃，推荐使用hilt）
 基于dagger2的android拓展库，通过注解自动生成ActivityModule模块，节省了注册Activity步骤
 
 #使用
